@@ -49,7 +49,7 @@ namespace School.People.Data
             modelBuilder.Entity<DbImage>().ToTable(Properties.Resources.ImageTableName);
         }
 
-        public PeopleDbContext(DbContextOptions options)
+        public PeopleDbContext(DbContextOptions<PeopleDbContext> options)
             : base(options) { }
     }
 }
