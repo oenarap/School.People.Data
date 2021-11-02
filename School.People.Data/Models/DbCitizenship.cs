@@ -6,13 +6,13 @@ namespace School.People.Data
 {
     internal class DbCitizenship : DbEntitySingle, ICitizenship
     {
-        [MaxLength(Lengths.DualCitizenshipModeMaxLength)]
+        [MaxLength(Constants.DualCitizenshipModeMaxLength)]
         public string DualCitizenshipMode { get; set; }
 
-        [MaxLength(Lengths.CitizenshipMaxLength)]
+        [MaxLength(Constants.CitizenshipMaxLength)]
         public string DualCitizenship { get; set; }
 
-        [MaxLength(Lengths.CitizenshipMaxLength)]
+        [MaxLength(Constants.CitizenshipMaxLength)]
         public string Country { get; set; }
     }
 }

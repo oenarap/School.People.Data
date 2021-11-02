@@ -7,14 +7,14 @@ namespace School.People.Data
     internal class DbOtherInformation : DbEntityMultiple, IOtherInformation
     {
         [Required]
-        [MaxLength(Lengths.OtherInformationCategoryMaxLength)]
+        [MaxLength(Constants.OtherInformationCategoryMaxLength)]
         public string Category { get; set; }
 
         [Required]
-        [MaxLength(Lengths.CommonNamesAndTitlesMaxLength)]
+        [MaxLength(Constants.CommonNamesAndTitlesMaxLength)]
         public string DescriptiveName { get; set; }
 
-        [MaxLength(Lengths.OtherInformationDetailsMaxLength)]
+        [MaxLength(Constants.OtherInformationDetailsMaxLength)]
         public string Details { get; set; }
     }
 }

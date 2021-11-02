@@ -7,12 +7,12 @@ namespace School.People.Data
     internal class DbTraining : DbActivity, ITraining
     {
         [Required]
-        [MaxLength(Lengths.CommonNamesAndTitlesMaxLength)]
+        [MaxLength(Constants.CommonNamesAndTitlesMaxLength)]
         public string TitleOfTrainingProgram { get; set; }
 
         public double DurationHours { get; set; }
 
-        [MaxLength(Lengths.CommonNamesAndTitlesMaxLength)]
+        [MaxLength(Constants.CommonNamesAndTitlesMaxLength)]
         public string Sponsor { get; set; }
     }
 }

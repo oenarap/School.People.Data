@@ -7,14 +7,14 @@ namespace School.People.Data
     public abstract class DbOccupation : DbActivity, IOccupation
     {
         [Required]
-        [MaxLength(Lengths.CommonNamesAndTitlesMaxLength)]
+        [MaxLength(Constants.CommonNamesAndTitlesMaxLength)]
         public string PositionTitle { get; set; }
 
         [Required]
-        [MaxLength(Lengths.CommonNamesAndTitlesMaxLength)]
+        [MaxLength(Constants.CommonNamesAndTitlesMaxLength)]
         public string EmployerOrganizationOrBusinessName { get; set; }
 
-        [MaxLength(Lengths.ContactNumbersMaxLength)]
+        [MaxLength(Constants.ContactNumbersMaxLength)]
         public string TelephoneNumber { get; set; }
     }
 }

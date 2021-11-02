@@ -10,58 +10,58 @@ namespace School.People.Data
         public bool IsRelatedToAuthorityThirdDegree { get; set; }
         public bool IsRelatedToAuthorityFourthDegree { get; set; }
 
-        [MaxLength(Lengths.FaqsDetailsMaxLength)]
+        [MaxLength(Constants.FaqsDetailsMaxLength)]
         public string RelationshipToAuthorityDetails { get; set; }
 
         public bool IsGuiltyOfAdministrativeOffense { get; set; }
 
-        [MaxLength(Lengths.FaqsDetailsMaxLength)]
+        [MaxLength(Constants.FaqsDetailsMaxLength)]
         public string AdministrativeOffenseDetails { get; set; }
 
         public bool WasCriminallyCharged { get; set; }
         public DateTimeOffset? CriminalChargesFilingDate { get; set; }
 
-        [MaxLength(Lengths.FaqsDetailsMaxLength)]
+        [MaxLength(Constants.FaqsDetailsMaxLength)]
         public string CriminalChargesCaseStatus { get; set; }
 
         public bool WasConvicted { get; set; }
 
-        [MaxLength(Lengths.FaqsDetailsMaxLength)]
+        [MaxLength(Constants.FaqsDetailsMaxLength)]
         public string ConvictionDetails { get; set; }
 
         public bool WasSeparatedFromService { get; set; }
 
-        [MaxLength(Lengths.FaqsDetailsMaxLength)]
+        [MaxLength(Constants.FaqsDetailsMaxLength)]
         public string SeparationFromServiceDetails { get; set; }
 
         public bool WasNatlOrLocalElectionCandidate { get; set; }
 
-        [MaxLength(Lengths.FaqsDetailsMaxLength)]
+        [MaxLength(Constants.FaqsDetailsMaxLength)]
         public string NatlOrLocalElectionCandidacyDetails { get; set; }
 
         public bool HasResignedForCandidacy { get; set; }
 
-        [MaxLength(Lengths.FaqsDetailsMaxLength)]
+        [MaxLength(Constants.FaqsDetailsMaxLength)]
         public string ResignationForCandidacyDetails { get; set; }
 
         public bool HasAcquiredImmigrantStatus { get; set; }
 
-        [MaxLength(Lengths.CitizenshipMaxLength)]
+        [MaxLength(Constants.CitizenshipMaxLength)]
         public string OriginCountry { get; set; }
 
         public bool IsIndigenousGroupMember { get; set; }
 
-        [MaxLength(Lengths.FaqsDetailsMaxLength)]
+        [MaxLength(Constants.FaqsDetailsMaxLength)]
         public string IndigenousGroupMembershipDetails { get; set; }
 
         public bool IsDifferentlyAbled { get; set; }
 
-        [MaxLength(Lengths.IdNumbersMaxLength)]
+        [MaxLength(Constants.IdNumbersMaxLength)]
         public string DifferentlyAbledIdNumber { get; set; }
 
         public bool IsSoloParent { get; set; }
 
-        [MaxLength(Lengths.IdNumbersMaxLength)]
+        [MaxLength(Constants.IdNumbersMaxLength)]
         public string SoloParentIdNumber { get; set; }
     }
 }

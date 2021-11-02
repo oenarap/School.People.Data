@@ -8,24 +8,24 @@ namespace School.People.Data
     internal partial class DbPerson : DbEntitySingle, IPerson
     {
         [Required]
-        [MinLength(Lengths.PersonNameFieldsMinLength)]
-        [MaxLength(Lengths.PersonSurnameMaxLength)]
+        [MinLength(Constants.PersonNameFieldsMinLength)]
+        [MaxLength(Constants.PersonSurnameMaxLength)]
         public string LastName { get; set; }
 
         [Required]
-        [MinLength(Lengths.PersonNameFieldsMinLength)]
-        [MaxLength(Lengths.CommonNamesAndTitlesMaxLength)]
+        [MinLength(Constants.PersonNameFieldsMinLength)]
+        [MaxLength(Constants.CommonNamesAndTitlesMaxLength)]
         public string FirstName { get; set; }
 
         [Required]
-        [MinLength(Lengths.PersonNameFieldsMinLength)]
-        [MaxLength(Lengths.PersonSurnameMaxLength)]
+        [MinLength(Constants.PersonNameFieldsMinLength)]
+        [MaxLength(Constants.PersonSurnameMaxLength)]
         public string MiddleName { get; set; }
 
-        [MaxLength(Lengths.PersonNameExtensionMaxLength)]
+        [MaxLength(Constants.PersonNameExtensionMaxLength)]
         public string NameExtension { get; set; }
 
-        [MaxLength(Lengths.PersonTitleMaxLength)]
+        [MaxLength(Constants.PersonTitleMaxLength)]
         public string Title { get; set; }
 
         [DefaultValue(false)]

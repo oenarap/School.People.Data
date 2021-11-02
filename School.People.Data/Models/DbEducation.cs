@@ -9,28 +9,28 @@ namespace School.People.Data
     internal class DbEducation : DbEntityMultiple, IEducation
     {
         [Required]
-        [MaxLength(Lengths.EducationLevelMaxLength)]
+        [MaxLength(Constants.EducationLevelMaxLength)]
         public string Level { get; set; }
 
         [Required]
-        [MaxLength(Lengths.CommonNamesAndTitlesMaxLength)]
+        [MaxLength(Constants.CommonNamesAndTitlesMaxLength)]
         public string SchoolName { get; set; }
 
         [Required]
-        [MaxLength(Lengths.CommonNamesAndTitlesMaxLength)]
+        [MaxLength(Constants.CommonNamesAndTitlesMaxLength)]
         public string DegreeCourse { get; set; }
 
         [MaxLength(4)]
         public string IfGraduatedYearGraduated { get; set; }
 
-        [MaxLength(Lengths.HighestLevelOrUnitsEarnedMaxLength)]
+        [MaxLength(Constants.HighestLevelOrUnitsEarnedMaxLength)]
         public string IfNotGraduatedHighestLevelOrUnitsEarned { get; set; }
 
         public DateTimeOffset? StartDate { get; set; }
 
         public DateTimeOffset? EndDate { get; set; }
 
-        [MaxLength(Lengths.ScholarshipOrHonorsReceivedMaxLength)]
+        [MaxLength(Constants.ScholarshipOrHonorsReceivedMaxLength)]
         public string ScholarshipOrHonorsReceived { get; set; }
 
         [DefaultValue(false)]

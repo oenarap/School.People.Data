@@ -6,22 +6,22 @@ namespace School.People.Data
 {
     internal class DbAgencyMemberDetails : DbEntitySingle, IAgencyMemberDetails
     {
-        [MaxLength(Lengths.IdNumbersMaxLength)]
+        [MaxLength(Constants.IdNumbersMaxLength)]
         public string AgencyId { get; set; }
 
-        [MaxLength(Lengths.IdNumbersMaxLength)]
+        [MaxLength(Constants.IdNumbersMaxLength)]
         public string GsisIdNumber { get; set; }
 
-        [MaxLength(Lengths.IdNumbersMaxLength)]
+        [MaxLength(Constants.IdNumbersMaxLength)]
         public string PagIbigIdNumber { get; set; }
 
-        [MaxLength(Lengths.IdNumbersMaxLength)]
+        [MaxLength(Constants.IdNumbersMaxLength)]
         public string PhilhealthNumber { get; set; }
 
-        [MaxLength(Lengths.IdNumbersMaxLength)]
+        [MaxLength(Constants.IdNumbersMaxLength)]
         public string SssNumber { get; set; }
 
-        [MaxLength(Lengths.IdNumbersMaxLength)]
+        [MaxLength(Constants.IdNumbersMaxLength)]
         public string Tin { get; set; }
     }
 }

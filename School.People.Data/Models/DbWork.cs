@@ -10,10 +10,10 @@ namespace School.People.Data
     {
         public decimal MonthlySalary { get; set; }
 
-        [MaxLength(Lengths.SalaryGradeAndStepIncrementMaxLength)]
+        [MaxLength(Constants.SalaryGradeAndStepIncrementMaxLength)]
         public string SalaryGradeAndStepIncrement { get; set; }
 
-        [MaxLength(Lengths.StatusOfAppointmentMaxLength)]
+        [MaxLength(Constants.StatusOfAppointmentMaxLength)]
         public string StatusOfAppointment { get; set; }
 
         [DefaultValue(false)]

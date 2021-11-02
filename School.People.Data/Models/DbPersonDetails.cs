@@ -7,13 +7,13 @@ namespace School.People.Data
 {
     internal partial class DbPersonDetails : DbEntitySingle, IPersonDetails
     {
-        [MaxLength(Lengths.SexMaxLength)]
+        [MaxLength(Constants.SexMaxLength)]
         public string Sex { get; set; }
 
-        [MaxLength(Lengths.CivilStatusMaxLength)]
+        [MaxLength(Constants.CivilStatusMaxLength)]
         public string CivilStatus { get; set; }
 
-        [MaxLength(Lengths.CivilStatusMaxLength)]
+        [MaxLength(Constants.CivilStatusMaxLength)]
         public string OtherCivilStatus { get; set; }
 
         [DefaultValue(0d)]
@@ -22,7 +22,7 @@ namespace School.People.Data
         [DefaultValue(0d)]
         public double WeightInKilograms { get; set; }
 
-        [MaxLength(Lengths.BloodTypeMaxLength)]
+        [MaxLength(Constants.BloodTypeMaxLength)]
         public string BloodType { get; set; }
     }
 }

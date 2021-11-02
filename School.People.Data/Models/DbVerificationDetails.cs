@@ -7,7 +7,7 @@ namespace School.People.Data
 {
     internal class DbVerificationDetails : DbEntitySingle, IVerificationDetails
     {
-        [MaxLength(Lengths.IdNumbersMaxLength)]
+        [MaxLength(Constants.IdNumbersMaxLength)]
         public string CommunityTaxCertificateNumber { get; set; }
 
         public DateTimeOffset? CommunityTaxCertificateIssuanceDate { get; set; }

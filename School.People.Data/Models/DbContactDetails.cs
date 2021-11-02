@@ -6,13 +6,13 @@ namespace School.People.Data
 {
     internal partial class DbContactDetails : DbEntitySingle, IContactDetails
     {
-        [MaxLength(Lengths.EmailAddressMaxLength)]
+        [MaxLength(Constants.EmailAddressMaxLength)]
         public string EmailAddress { get; set; }
 
-        [MaxLength(Lengths.ContactNumbersMaxLength)]
+        [MaxLength(Constants.ContactNumbersMaxLength)]
         public string TelephoneNumber { get; set; }
 
-        [MaxLength(Lengths.ContactNumbersMaxLength)]
+        [MaxLength(Constants.ContactNumbersMaxLength)]
         public string MobileNumber { get; set; }
     }
 }
