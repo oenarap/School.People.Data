@@ -23,7 +23,7 @@ namespace School.People.Data
         internal DbSet<DbContactDetails> ContactDetails { get; set; }
         internal DbSet<DbCitizenship> Citizenships { get; set; }
         internal DbSet<DbAddressIds> AddressIds { get; set; }
-        internal DbSet<DbImage> Images { get; set; }
+        internal DbSet<DbIdPicture> Images { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -46,7 +46,7 @@ namespace School.People.Data
             modelBuilder.Entity<DbContactDetails>().ToTable(Properties.Resources.ContactDetailsTableName);
             modelBuilder.Entity<DbCitizenship>().ToTable(Properties.Resources.CitizenshipTableName);
             modelBuilder.Entity<DbAddressIds>().ToTable(Properties.Resources.AddressIdsTableName);
-            modelBuilder.Entity<DbImage>().ToTable(Properties.Resources.ImageTableName);
+            modelBuilder.Entity<DbIdPicture>().ToTable(Properties.Resources.ImageTableName);
         }
 
         public PeopleDbContext(DbContextOptions<PeopleDbContext> options)

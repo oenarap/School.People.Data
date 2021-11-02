@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace School.People.Data.Repositories
 {
-    public class ImagesRepository : Repository<IImage, PeopleDbContext>, IImagesRepository
+    public class ImagesRepository : Repository<IIdPicture, PeopleDbContext>, IImagesRepository
     {
-        public async Task<IImage> ReadAsync(Guid id)
+        public async Task<IIdPicture> ReadAsync(Guid id)
         {
             try
             {
@@ -23,7 +23,7 @@ namespace School.People.Data.Repositories
             }
         }
 
-        public async Task<bool> UpdateAsync(IImage item)
+        public async Task<bool> UpdateAsync(IIdPicture item)
         {
             try
             {
@@ -35,7 +35,7 @@ namespace School.People.Data.Repositories
                 }
                 else if (item.Id != Guid.Empty)
                 {
-                    image = new DbImage()
+                    image = new DbIdPicture()
                     {
                         Id = item.Id,
                         RecentPhoto = item.RecentPhoto,
