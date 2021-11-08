@@ -3,27 +3,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using School.People.Core.Attributes;
 using School.People.Core.Repositories;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
 namespace School.People.Data.Repositories
 {
     public class FamilyIdsRepository : Repository<IFamilyIds, PeopleDbContext>, IFamilyIdsRepository
     {
-        public async Task<IEnumerable<IFamilyIds>> ReadAllAsync(Guid id)
-        {
-            try
-            {
-                var ids = await Context.FamilyIds.Where(i => i.MotherId == id || i.FatherId == id).ToListAsync().ConfigureAwait(false);
-                return ids;
-            }
-            catch
-            {
-                // TODO: log exception
-                return null;
-            }
-        }
-
         public async Task<IFamilyIds> ReadAsync(Guid id)
         {
             try
@@ -31,10 +16,9 @@ namespace School.People.Data.Repositories
                 var ids = await Context.FamilyIds.Where(i => i.Id == id).FirstOrDefaultAsync().ConfigureAwait(false);
                 return ids;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return null;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
