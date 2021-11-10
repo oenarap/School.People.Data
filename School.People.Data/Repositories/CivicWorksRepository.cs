@@ -5,6 +5,7 @@ using School.People.Core.Attributes;
 using School.People.Core.Repositories;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Apps.DataClient.Core;
 
 namespace School.People.Data.Repositories
 {
@@ -36,24 +37,22 @@ namespace School.People.Data.Repositories
                 }
                 return false;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return false;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
-        public async Task<IEnumerable<ICivicWork>> ReadAsync(Guid id)
+        public async Task<ICivicWork> ReadAsync(Guid id)
         {
             try
             {
-                IEnumerable<DbCivicWork> cworks = await Context.CivicWorks.Where(cw => cw.Id == id).ToListAsync().ConfigureAwait(false);
+                var cworks = await Context.CivicWorks.Where(cw => cw.Id == id).FirstOrDefaultAsync().ConfigureAwait(false);
                 return cworks;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return null;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
@@ -69,26 +68,24 @@ namespace School.People.Data.Repositories
                 }
                 return false;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return false;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
-        public async Task<Guid?> InsertAsync(ICivicWork item, Guid key)
+        public async Task<Guid?> InsertAsync(ICivicWork item)
         {
             try
             {
-                var cwork = await Context.CivicWorks.Where(cw => cw.Id == key && cw.PositionTitle == item.PositionTitle
+                var cwork = await Context.CivicWorks.Where(cw => cw.PositionTitle == item.PositionTitle
                             && cw.EmployerOrganizationOrBusinessName == item.EmployerOrganizationOrBusinessName)
                             .FirstOrDefaultAsync().ConfigureAwait(false);
                 if (cwork == null)
                 {
                     cwork = new DbCivicWork()
                     {
-                        Id = key,
-                        Index = Guid.NewGuid(),
+                        Id = Guid.NewGuid(),
                         PositionTitle = item.PositionTitle,
                         EmployerOrganizationOrBusinessName = item.EmployerOrganizationOrBusinessName,
                         TelephoneNumber = item.TelephoneNumber,
@@ -100,14 +97,13 @@ namespace School.People.Data.Repositories
                         CreatedOn = DateTimeOffset.Now
                     };
                     await Context.CivicWorks.AddAsync(cwork).ConfigureAwait(false);
-                    if (await Context.SaveChangesAsync() > 0) { return cwork.Index; }
+                    if (await Context.SaveChangesAsync() > 0) { return cwork.Id; }
                 }
                 return null;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return null;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 

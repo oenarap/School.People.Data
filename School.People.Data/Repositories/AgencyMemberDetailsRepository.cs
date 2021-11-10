@@ -16,10 +16,9 @@ namespace School.People.Data.Repositories
                 var details = await Context.AgencyMemberDetails.Where(d => d.Id == id).FirstOrDefaultAsync().ConfigureAwait(false);
                 return details;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return null;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
@@ -55,10 +54,9 @@ namespace School.People.Data.Repositories
                 }
                 return await Context.SaveChangesAsync() > 0;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return false;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 

@@ -16,10 +16,9 @@ namespace School.People.Data.Repositories
                 var dob = await Context.DateOfBirths.Where(d => d.Id == id).FirstOrDefaultAsync().ConfigureAwait(false);
                 return dob;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return null;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
@@ -28,6 +27,7 @@ namespace School.People.Data.Repositories
             try
             {
                 var dob = await Context.DateOfBirths.Where(d => d.Id == item.Id).FirstOrDefaultAsync().ConfigureAwait(false);
+                
                 if (dob != null)
                 {
                     dob.Birthdate = item.Birthdate;
@@ -45,10 +45,9 @@ namespace School.People.Data.Repositories
                 }
                 return await Context.SaveChangesAsync() > 0;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return false;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 

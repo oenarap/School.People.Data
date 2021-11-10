@@ -19,6 +19,7 @@ namespace School.People.Data.Repositories
                 if (eligibility == null)
                 {
                     eligibility = await Context.Eligibilities.Where(e => e.Index == item.Index && e.Id == item.Id).FirstOrDefaultAsync().ConfigureAwait(false);
+                    
                     if (eligibility != null)
                     {
                         eligibility.EligibilityName = item.EligibilityName;
@@ -33,24 +34,22 @@ namespace School.People.Data.Repositories
                 }
                 return false;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return false;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
-        public async Task<IEnumerable<IEligibility>> ReadAsync(Guid id)
+        public async Task<IEligibility> ReadAsync(Guid id)
         {
             try
             {
-                var educs = await Context.Eligibilities.Where(e => e.Id == id).ToListAsync().ConfigureAwait(false);
-                return educs;
+                var result = await Context.Eligibilities.Where(e => e.Id == id).FirstOrDefaultAsync().ConfigureAwait(false);
+                return result;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return null;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
@@ -58,7 +57,8 @@ namespace School.People.Data.Repositories
         {
             try
             {
-                DbEligibility eligibility = await Context.Eligibilities.Where(e => e.Index == item.Index && e.Id == item.Id).FirstOrDefaultAsync().ConfigureAwait(false);
+                var eligibility = await Context.Eligibilities.Where(e => e.Index == item.Index && e.Id == item.Id).FirstOrDefaultAsync().ConfigureAwait(false);
+                
                 if (eligibility != null)
                 {
                     Context.Eligibilities.Remove(eligibility);
@@ -66,24 +66,23 @@ namespace School.People.Data.Repositories
                 }
                 return false;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return false;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
-        public async Task<Guid?> InsertAsync(IEligibility item, Guid key)
+        public async Task<Guid?> InsertAsync(IEligibility item)
         {
             try
             {
-                var eligibility = await Context.Eligibilities.Where(e => e.Id == key && e.EligibilityName == item.EligibilityName).FirstOrDefaultAsync().ConfigureAwait(false);
+                var eligibility = await Context.Eligibilities.Where(e => e.EligibilityName == item.EligibilityName).FirstOrDefaultAsync().ConfigureAwait(false);
+                
                 if (eligibility == null)
                 {
                     eligibility = new DbEligibility()
                     {
-                        Id = key,
-                        Index = Guid.NewGuid(),
+                        Id = Guid.NewGuid(),
                         EligibilityName = item.EligibilityName,
                         Rating = item.Rating,
                         DateOfExamOrConferment = item.DateOfExamOrConferment,
@@ -93,14 +92,13 @@ namespace School.People.Data.Repositories
                         CreatedOn = DateTimeOffset.Now
                     };
                     await Context.Eligibilities.AddAsync(eligibility).ConfigureAwait(false);
-                    if (await Context.SaveChangesAsync() > 0) { return eligibility.Index; }
+                    if (await Context.SaveChangesAsync() > 0) { return eligibility.Id; }
                 }
                 return null;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return null;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 

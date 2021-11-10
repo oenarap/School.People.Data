@@ -14,7 +14,8 @@ namespace School.People.Data.Repositories
         {
             try
             {
-                DbPerson person = await GetPersonByNameAsync(item).ConfigureAwait(false);
+                var person = await GetPersonByNameAsync(item).ConfigureAwait(false);
+                
                 if (person == null)
                 {
                     person = await Context.People.Where(p => p.Id == item.Id && p.IsPersonnel == false &&
@@ -36,10 +37,9 @@ namespace School.People.Data.Repositories
                 }
                 return false;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return false;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
@@ -47,14 +47,13 @@ namespace School.People.Data.Repositories
         {
             try
             {
-                DbPerson person = await Context.People.Where(p => p.Id == id && p.IsPersonnel == false &&
+                var person = await Context.People.Where(p => p.Id == id && p.IsPersonnel == false &&
                         p.IsStudent == false && p.IsOther == true).FirstOrDefaultAsync().ConfigureAwait(false);
                 return person;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return null;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
@@ -62,7 +61,8 @@ namespace School.People.Data.Repositories
         {
             try
             {
-                DbPerson person = await Context.People.Where(p => p.Id == item.Id).FirstOrDefaultAsync().ConfigureAwait(false);
+                var person = await Context.People.Where(p => p.Id == item.Id).FirstOrDefaultAsync().ConfigureAwait(false);
+                
                 if (person != null)
                 {
                     person.IsOther = false;
@@ -70,10 +70,9 @@ namespace School.People.Data.Repositories
                 }
                 return false;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return false;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
@@ -81,14 +80,13 @@ namespace School.People.Data.Repositories
         {
             try
             {
-                IEnumerable<DbPerson> people = await Context.People.Where(p => p.IsPersonnel == false &&
+                var people = await Context.People.Where(p => p.IsPersonnel == false &&
                     p.IsStudent == false && p.IsOther == true).ToListAsync().ConfigureAwait(false);
                 return people;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return null;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
@@ -96,7 +94,8 @@ namespace School.People.Data.Repositories
         {
             try
             {
-                DbPerson person = await GetPersonByNameAsync(item).ConfigureAwait(false);
+                var person = await GetPersonByNameAsync(item).ConfigureAwait(false);
+                
                 if (person != null)
                 {
                     person.IsOther = true;
@@ -120,10 +119,9 @@ namespace School.People.Data.Repositories
                 if (await Context.SaveChangesAsync() > 0) { return person.Id; }
                 return null;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return null;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 

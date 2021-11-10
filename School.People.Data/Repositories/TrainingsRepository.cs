@@ -34,24 +34,22 @@ namespace School.People.Data.Repositories
                 }
                 return false;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return false;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
-        public async Task<IEnumerable<ITraining>> ReadAsync(Guid id)
+        public async Task<ITraining> ReadAsync(Guid id)
         {
             try
             {
-                IEnumerable<DbTraining> trainings = await Context.Trainings.Where(t => t.Id == id).ToListAsync().ConfigureAwait(false);
-                return trainings;
+                var training = await Context.Trainings.Where(t => t.Id == id).FirstOrDefaultAsync().ConfigureAwait(false);
+                return training;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return null;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
@@ -67,25 +65,23 @@ namespace School.People.Data.Repositories
                 }
                 return false;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return false;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
-        public async Task<Guid?> InsertAsync(ITraining item, Guid key)
+        public async Task<Guid?> InsertAsync(ITraining item)
         {
             try
             {
-                var training = await Context.Trainings.Where(t => t.Id == key && t.TitleOfTrainingProgram == item.TitleOfTrainingProgram
+                var training = await Context.Trainings.Where(t => t.TitleOfTrainingProgram == item.TitleOfTrainingProgram
                                 && t.Sponsor == item.Sponsor).FirstOrDefaultAsync().ConfigureAwait(false);
                 if (training == null)
                 {
                     training = new DbTraining()
                     {
-                        Id = key,
-                        Index = Guid.NewGuid(),
+                        Id = Guid.NewGuid(),
                         TitleOfTrainingProgram = item.TitleOfTrainingProgram,
                         Sponsor = item.Sponsor,
                         StartDate = item.StartDate,
@@ -96,14 +92,13 @@ namespace School.People.Data.Repositories
                         CreatedOn = DateTimeOffset.Now
                     };
                     await Context.Trainings.AddAsync(training).ConfigureAwait(false);
-                    if (await Context.SaveChangesAsync() > 0) { return training.Index; }
+                    if (await Context.SaveChangesAsync() > 0) { return training.Id; }
                 }
                 return null;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return null;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 

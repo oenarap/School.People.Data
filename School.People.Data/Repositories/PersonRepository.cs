@@ -16,10 +16,9 @@ namespace School.People.Data.Repositories
                 var person = await Context.People.Where(p => p.Id == id).FirstOrDefaultAsync().ConfigureAwait(false);
                 return person;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return null;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 

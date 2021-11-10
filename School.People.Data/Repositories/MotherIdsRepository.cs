@@ -13,6 +13,7 @@ namespace School.People.Data.Repositories
             try
             {
                 var ids = await Context.FamilyIds.Where(i => i.Id == key).FirstOrDefaultAsync().ConfigureAwait(false);
+                
                 if (ids != null)
                 {
                     ids.MotherId = item;
@@ -30,10 +31,9 @@ namespace School.People.Data.Repositories
                 }
                 return await Context.SaveChangesAsync() > 0;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return false;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 

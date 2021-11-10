@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using School.People.Core.Attributes;
 using School.People.Core.Repositories;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
 namespace School.People.Data.Repositories
@@ -39,24 +38,22 @@ namespace School.People.Data.Repositories
                 }
                 return false;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return false;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
-        public async Task<IEnumerable<IWork>> ReadAsync(Guid id)
+        public async Task<IWork> ReadAsync(Guid id)
         {
             try
             {
-                IEnumerable<DbWork> works = await Context.Works.Where(w => w.Id == id).ToListAsync().ConfigureAwait(false);
-                return works;
+                var work = await Context.Works.Where(w => w.Id == id).FirstOrDefaultAsync().ConfigureAwait(false);
+                return work;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return null;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
@@ -64,7 +61,8 @@ namespace School.People.Data.Repositories
         {
             try
             {
-                DbWork work = await Context.Works.Where(w => w.Index == item.Index && w.Id == item.Id).FirstOrDefaultAsync().ConfigureAwait(false);
+                var work = await Context.Works.Where(w => w.Index == item.Index && w.Id == item.Id).FirstOrDefaultAsync().ConfigureAwait(false);
+                
                 if (work != null)
                 {
                     Context.Works.Remove(work);
@@ -72,26 +70,24 @@ namespace School.People.Data.Repositories
                 }
                 return false;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return false;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
-        public async Task<Guid?> InsertAsync(IWork item, Guid key)
+        public async Task<Guid?> InsertAsync(IWork item)
         {
             try
             {
-                var work = await Context.Works.Where(w => w.Id == key && w.PositionTitle == item.PositionTitle
+                var work = await Context.Works.Where(w => w.PositionTitle == item.PositionTitle
                             && w.EmployerOrganizationOrBusinessName == item.EmployerOrganizationOrBusinessName)
                             .FirstOrDefaultAsync().ConfigureAwait(false);
                 if (work == null)
                 {
                     work = new DbWork()
                     {
-                        Id = key,
-                        Index = Guid.NewGuid(),
+                        Id = Guid.NewGuid(),
                         PositionTitle = item.PositionTitle,
                         EmployerOrganizationOrBusinessName = item.EmployerOrganizationOrBusinessName,
                         TelephoneNumber = item.TelephoneNumber,
@@ -106,14 +102,13 @@ namespace School.People.Data.Repositories
                         CreatedOn = DateTimeOffset.Now
                     };
                     await Context.Works.AddAsync(work).ConfigureAwait(false);
-                    if (await Context.SaveChangesAsync() > 0) { return work.Index; }
+                    if (await Context.SaveChangesAsync() > 0) { return work.Id; }
                 }
                 return null;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return null;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 

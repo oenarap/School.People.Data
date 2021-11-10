@@ -3,6 +3,7 @@ using School.People.Core;
 using System.Threading.Tasks;
 using School.People.Core.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace School.People.Data.Repositories
 {
@@ -37,10 +38,9 @@ namespace School.People.Data.Repositories
                 }
                 return false;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return false;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 

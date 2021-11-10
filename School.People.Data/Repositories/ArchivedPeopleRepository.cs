@@ -14,16 +14,19 @@ namespace School.People.Data.Repositories
         {
             try
             {
-                IEnumerable<DbPerson> people = await Context.People.Where(p => p.IsPersonnel == false &&
+                var people = await Context.People.Where(p => p.IsPersonnel == false &&
                     p.IsStudent == false && p.IsOther == false).ToListAsync().ConfigureAwait(false);
                 return people;
             }
-            catch (Exception ex) { throw new Exception(ex.Message); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex.InnerException);
+            }
         }
 
         public async Task<bool> ContainsAsync(IPerson item)
         {
-            DbPerson person = await GetPersonByNameAsync(item).ConfigureAwait(false);
+            var person = await GetPersonByNameAsync(item).ConfigureAwait(false);
             return person != null;
         }
 

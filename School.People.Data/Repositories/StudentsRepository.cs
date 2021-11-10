@@ -17,10 +17,9 @@ namespace School.People.Data.Repositories
                 var person = await Context.People.Where(p => p.Id == id && p.IsStudent == true).FirstOrDefaultAsync().ConfigureAwait(false);
                 return person;
             }
-            catch 
-            { 
-                // TODO: log exception
-                return null; 
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
@@ -29,6 +28,7 @@ namespace School.People.Data.Repositories
             try
             {
                 var person = await Context.People.Where(p => p.Id == item.Id).FirstOrDefaultAsync().ConfigureAwait(false);
+                
                 if (person != null)
                 {
                     person.IsStudent = false;
@@ -36,10 +36,9 @@ namespace School.People.Data.Repositories
                 }
                 return false;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return false;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
@@ -50,10 +49,9 @@ namespace School.People.Data.Repositories
                 var people = await Context.People.Where(p => p.IsStudent == true).ToListAsync().ConfigureAwait(false);
                 return people;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return null;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
@@ -62,6 +60,7 @@ namespace School.People.Data.Repositories
             try
             {
                 var person = await GetPersonByNameAsync(item).ConfigureAwait(false);
+                
                 if (person != null)
                 {
                     person.IsStudent = true;
@@ -85,10 +84,9 @@ namespace School.People.Data.Repositories
                 if (await Context.SaveChangesAsync() > 0) { return person.Id; }
                 return null;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return null;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 

@@ -5,6 +5,7 @@ using School.People.Core.Attributes;
 using School.People.Core.Repositories;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Apps.DataClient.Core;
 
 namespace School.People.Data.Repositories
 {
@@ -37,24 +38,22 @@ namespace School.People.Data.Repositories
                 }
                 return false;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return false;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
-        public async Task<IEnumerable<IEducation>> ReadAsync(Guid id)
+        public async Task<IEducation> ReadAsync(Guid id)
         {
             try
             {
-                IEnumerable<DbEducation> educs = await Context.Educations.Where(e => e.Id == id).ToListAsync().ConfigureAwait(false);
-                return educs;
+                var educ = await Context.Educations.Where(e => e.Id == id).FirstOrDefaultAsync().ConfigureAwait(false);
+                return educ;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return null;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
@@ -70,26 +69,24 @@ namespace School.People.Data.Repositories
                 }
                 return false;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return false;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
-        public async Task<Guid?> InsertAsync(IEducation item, Guid key)
+        public async Task<Guid?> InsertAsync(IEducation item)
         {
             try
             {
-                var educ = await Context.Educations.Where(e => e.Id == key && e.Level == item.Level
+                var educ = await Context.Educations.Where(e => e.Level == item.Level
                             && e.SchoolName == item.SchoolName && e.DegreeCourse == item.DegreeCourse)
                             .FirstOrDefaultAsync().ConfigureAwait(false);
                 if (educ == null)
                 {
                     educ = new DbEducation()
                     {
-                        Id = key,
-                        Index = Guid.NewGuid(),
+                        Id = Guid.NewGuid(),
                         Level = item.Level,
                         SchoolName = item.SchoolName,
                         DegreeCourse = item.DegreeCourse,
@@ -102,14 +99,13 @@ namespace School.People.Data.Repositories
                         CreatedOn = DateTimeOffset.Now
                     };
                     await Context.Educations.AddAsync(educ).ConfigureAwait(false);
-                    if (await Context.SaveChangesAsync() > 0) { return educ.Index; }
+                    if (await Context.SaveChangesAsync() > 0) { return educ.Id; }
                 }
                 return null;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return null;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 

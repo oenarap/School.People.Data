@@ -16,10 +16,9 @@ namespace School.People.Data.Repositories
                 var citizenship = await Context.Citizenships.Where(c => c.Id == id).FirstOrDefaultAsync().ConfigureAwait(false);
                 return citizenship;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return null;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
@@ -28,6 +27,7 @@ namespace School.People.Data.Repositories
             try
             {
                 var citizenship = await Context.Citizenships.Where(c => c.Id == item.Id).FirstOrDefaultAsync().ConfigureAwait(false);
+                
                 if (citizenship != null)
                 {
                     citizenship.DualCitizenshipMode = item.DualCitizenshipMode;
@@ -49,10 +49,9 @@ namespace School.People.Data.Repositories
                 }
                 return await Context.SaveChangesAsync() > 0;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return false;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 

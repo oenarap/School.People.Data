@@ -30,24 +30,22 @@ namespace School.People.Data.Repositories
                 }
                 return false;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return false;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
-        public async Task<IEnumerable<IOtherInformation>> ReadAsync(Guid id)
+        public async Task<IOtherInformation> ReadAsync(Guid id)
         {
             try
             {
-                IEnumerable<DbOtherInformation> infos = await Context.OtherInformations.Where(i => i.Id == id).ToListAsync().ConfigureAwait(false);
-                return infos;
+                var info = await Context.OtherInformations.Where(i => i.Id == id).FirstOrDefaultAsync().ConfigureAwait(false);
+                return info;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return null;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
@@ -63,39 +61,36 @@ namespace School.People.Data.Repositories
                 }
                 return false;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return false;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
-        public async Task<Guid?> InsertAsync(IOtherInformation item, Guid key)
+        public async Task<Guid?> InsertAsync(IOtherInformation item)
         {
             try
             {
-                var info = await Context.OtherInformations.Where(i => i.Id == key && i.Category == item.Category
+                var info = await Context.OtherInformations.Where(i => i.Category == item.Category
                             && i.DescriptiveName == item.DescriptiveName).FirstOrDefaultAsync().ConfigureAwait(false);
                 if (info == null)
                 {
                     info = new DbOtherInformation()
                     {
-                        Id = key,
-                        Index = Guid.NewGuid(),
+                        Id = Guid.NewGuid(),
                         Category = item.Category,
                         DescriptiveName = item.DescriptiveName,
                         Details = item.Details,
                         CreatedOn = DateTimeOffset.Now
                     };
                     await Context.OtherInformations.AddAsync(info).ConfigureAwait(false);
-                    if (await Context.SaveChangesAsync() > 0) { return info.Index; }
+                    if (await Context.SaveChangesAsync() > 0) { return info.Id; }
                 }
                 return null;
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: log exception
-                return null;
+                throw new Exception(ex.Message, ex.InnerException);
             }
         }
 
