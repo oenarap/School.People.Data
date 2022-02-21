@@ -48,8 +48,8 @@ namespace School.People.Data.Repositories
         {
             try
             {
-                var educ = await Context.Educations.Where(e => e.Id == id).FirstOrDefaultAsync().ConfigureAwait(false);
-                return educ;
+                return await Context.Educations.AsNoTracking()
+                    .Where(e => e.Id == id).FirstOrDefaultAsync().ConfigureAwait(false);
             }
             catch (Exception ex)
             {

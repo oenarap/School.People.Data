@@ -14,8 +14,9 @@ namespace School.People.Data.Repositories
         {
             try
             {
-                var person = await Context.People.Where(p => p.Id == id && p.IsPersonnel == true).FirstOrDefaultAsync().ConfigureAwait(false);
-                return person;
+                return await Context.People.AsNoTracking()
+                    .Where(p => p.Id == id && p.IsPersonnel == true)
+                    .FirstOrDefaultAsync().ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -46,8 +47,8 @@ namespace School.People.Data.Repositories
         {
             try
             {
-                var people = await Context.People.Where(p => p.IsPersonnel == true).ToListAsync().ConfigureAwait(false);
-                return people;
+                return await Context.People.AsNoTracking()
+                    .Where(p => p.IsPersonnel == true).ToListAsync().ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -74,7 +75,7 @@ namespace School.People.Data.Repositories
                         LastName = item.LastName,
                         FirstName = item.FirstName,
                         MiddleName = item.MiddleName,
-                        NameExtension = FixNameExtension(item.NameExtension),
+                        NameExtension = item.NameExtension,
                         Title = item.Title,
                         IsPersonnel = true,
                         CreatedOn = DateTimeOffset.Now

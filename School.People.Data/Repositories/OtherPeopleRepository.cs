@@ -25,7 +25,7 @@ namespace School.People.Data.Repositories
                         person.LastName = item.LastName;
                         person.FirstName = item.FirstName;
                         person.MiddleName = item.MiddleName;
-                        person.NameExtension = FixNameExtension(item.NameExtension);
+                        person.NameExtension = item.NameExtension;
                         person.Title = item.Title;
                         return await Context.SaveChangesAsync() > 0;
                     }
@@ -47,9 +47,9 @@ namespace School.People.Data.Repositories
         {
             try
             {
-                var person = await Context.People.Where(p => p.Id == id && p.IsPersonnel == false &&
-                        p.IsStudent == false && p.IsOther == true).FirstOrDefaultAsync().ConfigureAwait(false);
-                return person;
+                return await Context.People.AsNoTracking()
+                    .Where(p => p.Id == id && p.IsPersonnel == false && p.IsStudent == false && p.IsOther == true)
+                    .FirstOrDefaultAsync().ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -80,9 +80,9 @@ namespace School.People.Data.Repositories
         {
             try
             {
-                var people = await Context.People.Where(p => p.IsPersonnel == false &&
+                return await Context.People.AsNoTracking()
+                    .Where(p => p.IsPersonnel == false &&
                     p.IsStudent == false && p.IsOther == true).ToListAsync().ConfigureAwait(false);
-                return people;
             }
             catch (Exception ex)
             {
@@ -109,7 +109,7 @@ namespace School.People.Data.Repositories
                         LastName = item.LastName,
                         FirstName = item.FirstName,
                         MiddleName = item.MiddleName,
-                        NameExtension = FixNameExtension(item.NameExtension),
+                        NameExtension = item.NameExtension,
                         Title = item.Title,
                         IsOther = true,
                         CreatedOn = DateTimeOffset.Now

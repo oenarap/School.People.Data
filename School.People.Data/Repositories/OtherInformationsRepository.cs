@@ -40,8 +40,8 @@ namespace School.People.Data.Repositories
         {
             try
             {
-                var info = await Context.OtherInformations.Where(i => i.Id == id).FirstOrDefaultAsync().ConfigureAwait(false);
-                return info;
+                return await Context.OtherInformations.AsNoTracking()
+                    .Where(i => i.Id == id).FirstOrDefaultAsync().ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -54,6 +54,7 @@ namespace School.People.Data.Repositories
             try
             {
                 var info = await Context.OtherInformations.Where(i => i.Index == item.Index && i.Id == item.Id).FirstOrDefaultAsync().ConfigureAwait(false);
+                
                 if (info != null)
                 {
                     Context.OtherInformations.Remove(info);
@@ -73,6 +74,7 @@ namespace School.People.Data.Repositories
             {
                 var info = await Context.OtherInformations.Where(i => i.Category == item.Category
                             && i.DescriptiveName == item.DescriptiveName).FirstOrDefaultAsync().ConfigureAwait(false);
+                
                 if (info == null)
                 {
                     info = new DbOtherInformation()

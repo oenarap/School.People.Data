@@ -3,9 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using School.People.Core.Attributes;
 using School.People.Core.Repositories;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using Apps.DataClient.Core;
 
 namespace School.People.Data.Repositories
 {
@@ -47,8 +45,8 @@ namespace School.People.Data.Repositories
         {
             try
             {
-                var cworks = await Context.CivicWorks.Where(cw => cw.Id == id).FirstOrDefaultAsync().ConfigureAwait(false);
-                return cworks;
+                return await Context.CivicWorks.AsNoTracking()
+                    .Where(cw => cw.Id == id).FirstOrDefaultAsync().ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -60,7 +58,7 @@ namespace School.People.Data.Repositories
         {
             try
             {
-                DbCivicWork cwork = await Context.CivicWorks.Where(cw => cw.Index == item.Index && cw.Id == item.Id).FirstOrDefaultAsync().ConfigureAwait(false);
+                var cwork = await Context.CivicWorks.Where(cw => cw.Index == item.Index && cw.Id == item.Id).FirstOrDefaultAsync().ConfigureAwait(false);
                 if (cwork != null)
                 {
                     Context.CivicWorks.Remove(cwork);

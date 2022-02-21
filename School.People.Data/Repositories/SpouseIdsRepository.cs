@@ -13,6 +13,7 @@ namespace School.People.Data.Repositories
             try
             {
                 var ids = await Context.FamilyIds.Where(i => i.Id == key).FirstOrDefaultAsync().ConfigureAwait(false);
+                
                 if (ids != null)
                 {
                     ids.SpouseId = item;

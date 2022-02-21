@@ -44,8 +44,8 @@ namespace School.People.Data.Repositories
         {
             try
             {
-                var result = await Context.Eligibilities.Where(e => e.Id == id).FirstOrDefaultAsync().ConfigureAwait(false);
-                return result;
+                return await Context.Eligibilities.AsNoTracking()
+                    .Where(e => e.Id == id).FirstOrDefaultAsync().ConfigureAwait(false);
             }
             catch (Exception ex)
             {

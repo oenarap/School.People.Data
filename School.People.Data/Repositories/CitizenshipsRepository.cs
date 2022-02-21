@@ -13,8 +13,8 @@ namespace School.People.Data.Repositories
         {
             try
             {
-                var citizenship = await Context.Citizenships.Where(c => c.Id == id).FirstOrDefaultAsync().ConfigureAwait(false);
-                return citizenship;
+                return await Context.Citizenships.AsNoTracking()
+                    .Where(c => c.Id == id).FirstOrDefaultAsync().ConfigureAwait(false);
             }
             catch (Exception ex)
             {

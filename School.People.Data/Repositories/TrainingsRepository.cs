@@ -44,8 +44,8 @@ namespace School.People.Data.Repositories
         {
             try
             {
-                var training = await Context.Trainings.Where(t => t.Id == id).FirstOrDefaultAsync().ConfigureAwait(false);
-                return training;
+                return await Context.Trainings.AsNoTracking()
+                    .Where(t => t.Id == id).FirstOrDefaultAsync().ConfigureAwait(false);
             }
             catch (Exception ex)
             {

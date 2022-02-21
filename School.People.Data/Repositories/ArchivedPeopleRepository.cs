@@ -14,9 +14,10 @@ namespace School.People.Data.Repositories
         {
             try
             {
-                var people = await Context.People.Where(p => p.IsPersonnel == false &&
-                    p.IsStudent == false && p.IsOther == false).ToListAsync().ConfigureAwait(false);
-                return people;
+                return await Context.People.AsNoTracking()
+                    .Where(p => p.IsPersonnel == false &&
+                    p.IsStudent == false && p.IsOther == false)
+                    .ToListAsync().ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -24,11 +25,13 @@ namespace School.People.Data.Repositories
             }
         }
 
-        public async Task<bool> ContainsAsync(IPerson item)
-        {
-            var person = await GetPersonByNameAsync(item).ConfigureAwait(false);
-            return person != null;
-        }
+        //public async Task<bool> ContainsAsync(IPerson item)
+        //{
+        //    var count = Context.People.Count(p => p.LastName == item.LastName
+        //        && p.FirstName == item.FirstName && p.MiddleName == item.MiddleName
+        //        && p.NameExtension == item.NameExtension);
+        //    return count > 0;
+        //}
 
         public ArchivedPeopleRepository(PeopleDbContext context)
             : base(context) { }

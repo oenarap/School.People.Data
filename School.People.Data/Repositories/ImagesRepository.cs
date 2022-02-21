@@ -13,8 +13,8 @@ namespace School.People.Data.Repositories
         {
             try
             {
-                var image = await Context.Images.Where(i => i.Id == id).FirstOrDefaultAsync().ConfigureAwait(false);
-                return image;
+                return await Context.Images.AsNoTracking()
+                    .Where(i => i.Id == id).FirstOrDefaultAsync().ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -27,6 +27,7 @@ namespace School.People.Data.Repositories
             try
             {
                 var image = await Context.Images.Where(i => i.Id == item.Id).FirstOrDefaultAsync().ConfigureAwait(false);
+                
                 if (image != null)
                 {
                     image.RecentPhoto = item.RecentPhoto;

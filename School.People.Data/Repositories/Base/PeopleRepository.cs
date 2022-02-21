@@ -18,12 +18,6 @@ namespace School.People.Data.Repositories
             return null;
         }
 
-        internal string FixNameExtension(string nameExtension)
-        {
-            if (string.IsNullOrEmpty(nameExtension) || string.IsNullOrWhiteSpace(nameExtension)) { return null; }
-            return nameExtension;
-        }
-
         internal PeopleRepository(PeopleDbContext context)
             : base(context) { }
     }

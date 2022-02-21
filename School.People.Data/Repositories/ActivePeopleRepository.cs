@@ -26,7 +26,7 @@ namespace School.People.Data.Repositories
                         person.LastName = item.LastName;
                         person.FirstName = item.FirstName;
                         person.MiddleName = item.MiddleName;
-                        person.NameExtension = FixNameExtension(item.NameExtension);
+                        person.NameExtension = item.NameExtension;
                         person.Title = item.Title;
                         return await Context.SaveChangesAsync() > 0;
                     }

@@ -13,8 +13,8 @@ namespace School.People.Data.Repositories
         {
             try
             {
-                var faqs = await Context.Faqs.Where(a => a.Id == id).FirstOrDefaultAsync().ConfigureAwait(false);
-                return faqs;
+                return await Context.Faqs.AsNoTracking()
+                    .Where(a => a.Id == id).FirstOrDefaultAsync().ConfigureAwait(false);
             }
             catch (Exception ex)
             {

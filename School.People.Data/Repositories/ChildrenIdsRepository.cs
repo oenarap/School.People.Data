@@ -13,10 +13,10 @@ namespace School.People.Data.Repositories
         {
             try
             {
-                var result = await (from ids in Context.FamilyIds
-                             where (ids.FatherId == id || ids.MotherId == id)
-                             select ids.Id).ToListAsync();
-                return result;
+                return await Context.FamilyIds.AsNoTracking()
+                    .Where(ids => ids.MotherId == id || ids.FatherId == id)
+                    .Select(ids => ids.Id)
+                    .ToListAsync();
             }
             catch (Exception ex)
             {
